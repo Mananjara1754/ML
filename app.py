@@ -13,7 +13,6 @@ st.set_page_config(page_title="Prédiction de Loyer - Antananarivo", layout="wid
 # --- 1. CHARGEMENT DU MODELE SAUVEGARDE ---
 @st.cache_resource
 def load_model():
-    # Cache invalidation comment
     model = joblib.load('modele_loyer.pkl')
     scaler = joblib.load('scaler_loyer.pkl')
     feature_cols = joblib.load('colonnes_loyer.pkl')
