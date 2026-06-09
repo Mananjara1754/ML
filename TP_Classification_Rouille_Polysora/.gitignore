@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.DS_Store
+uploads/
+features.csv
+model.pkl
+model_meta.pkl
