@@ -26,7 +26,6 @@ from feature_engineering import (
 # ---------------------------------------------------------------------------
 st.set_page_config(
     page_title="Diagnostic Rouille Polysora - Maïs Madagascar",
-    page_icon="🌽",
     layout="wide",
 )
 
@@ -87,7 +86,7 @@ def sauvegarder_historique(entry: dict):
 # Interface principale
 # ---------------------------------------------------------------------------
 
-st.title("🌽 Diagnostic de la Rouille Polysora")
+st.title("Diagnostic de la Rouille Polysora")
 st.markdown(
     "**Système d'aide au diagnostic pour les techniciens agricoles à Madagascar**  \n"
     "Téléversez une photo de feuille de maïs pour obtenir un diagnostic instantané."
@@ -96,7 +95,7 @@ st.markdown(
 st.divider()
 
 # --- Module 1 : Upload et prédiction ---
-st.header("📤 Téléversement et Prédiction")
+st.header("Téléversement et Prédiction")
 
 uploaded_file = st.file_uploader(
     "Choisissez une image de feuille de maïs",
@@ -138,7 +137,7 @@ if uploaded_file is not None:
 
             if prediction == 1:
                 st.error(
-                    "🔴 **ATTENTION : Feuille Malade (Rouille Détectée)**\n\n"
+                    "**ATTENTION : Feuille Malade (Rouille Détectée)**\n\n"
                     "Des pustules orangées/brunâtres caractéristiques de la "
                     "Rouille Polysora ont été détectées. "
                     "Un traitement fongicide est recommandé."
@@ -146,7 +145,7 @@ if uploaded_file is not None:
                 diagnostic = "MALADE"
             else:
                 st.success(
-                    "🟢 **Feuille Saine**\n\n"
+                    "**Feuille Saine**\n\n"
                     "Aucun signe de Rouille Polysora détecté. "
                     "La feuille présente un aspect normal."
                 )
@@ -166,7 +165,7 @@ if uploaded_file is not None:
 st.divider()
 
 # --- Module 2 : Galerie d'historique ---
-st.header("🖼️ Galerie d'Historique des Détections")
+st.header("Galerie d'Historique des Détections")
 
 historique = charger_historique()
 
@@ -183,11 +182,11 @@ else:
                 st.image(img_path, use_container_width=True)
                 if entry["diagnostic"] == "MALADE":
                     st.markdown(
-                        f"🔴 **{entry['diagnostic']}**  \n"
+                        f"**{entry['diagnostic']}**  \n"
                         f"Rouille : {entry['pct_rouille']:.2%}"
                     )
                 else:
                     st.markdown(
-                        f"🟢 **{entry['diagnostic']}**  \n"
+                        f"**{entry['diagnostic']}**  \n"
                         f"Rouille : {entry['pct_rouille']:.2%}"
                     )
