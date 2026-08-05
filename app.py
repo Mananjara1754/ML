@@ -55,12 +55,12 @@ def trouver_quartier_le_plus_proche(lat, lon):
     return quartier_proche
 
 # --- 3. INTERFACE UTILISATEUR ---
-st.title("🏡 Prédiction de Loyer à Antananarivo")
+st.title("Prédiction de Loyer à Antananarivo")
 
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader("📍 Choisissez l'emplacement")
+    st.subheader("Choisissez l'emplacement")
     m = folium.Map(location=[-18.91368, 47.53613], zoom_start=12)
     for q, coords in quartiers_coords.items():
         folium.CircleMarker(location=coords, radius=5, popup=q, color="blue", fill=True).add_to(m)
@@ -74,7 +74,7 @@ with col1:
         st.success(f"📍 Quartier le plus proche : **{quartier_selectionne}**")
 
 with col2:
-    st.subheader("📋 Caractéristiques")
+    st.subheader("Caractéristiques")
     quartier_input = st.selectbox("Quartier", list(quartiers_coords.keys()), index=list(quartiers_coords.keys()).index(quartier_selectionne))
     superficie = st.number_input("Superficie (m²)", min_value=10, max_value=500, value=50)
     chambres = st.number_input("Nombre de chambres", min_value=1, max_value=10, value=2)
@@ -108,7 +108,7 @@ with col2:
 
 # --- 4. VISUALISATION DES POIDS ---
 st.markdown("---")
-st.subheader("📊 Poids des variables du modèle")
+st.subheader("Poids des variables du modèle")
 coefs = pd.DataFrame({'Variable': feature_cols, 'Poids (Coefficient)': model.coef_})
 coefs['Poids Absolu'] = coefs['Poids (Coefficient)'].abs()
 coefs = coefs.sort_values(by='Poids Absolu', ascending=False)
