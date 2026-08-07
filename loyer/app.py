@@ -60,7 +60,7 @@ st.title("Prédiction de Loyer à Antananarivo")
 col1, col2 = st.columns([1, 1])
 
 with col1:
-    st.subheader("Choisissez l'emplacement")
+    st.subheader("📍 Choisissez l'emplacement")
     m = folium.Map(location=[-18.91368, 47.53613], zoom_start=12)
     for q, coords in quartiers_coords.items():
         folium.CircleMarker(location=coords, radius=5, popup=q, color="blue", fill=True).add_to(m)
@@ -74,7 +74,7 @@ with col1:
         st.success(f"📍 Quartier le plus proche : **{quartier_selectionne}**")
 
 with col2:
-    st.subheader("Caractéristiques")
+    st.subheader(" Caractéristiques")
     quartier_input = st.selectbox("Quartier", list(quartiers_coords.keys()), index=list(quartiers_coords.keys()).index(quartier_selectionne))
     superficie = st.number_input("Superficie (m²)", min_value=10, max_value=500, value=50)
     chambres = st.number_input("Nombre de chambres", min_value=1, max_value=10, value=2)
@@ -83,7 +83,7 @@ with col2:
     meuble = st.selectbox("Meublé", ["non", "oui"])
     etat = st.selectbox("État général", ["bon", "moyen", "mauvais"])
 
-    if st.button("Prédire le Loyer", use_container_width=True):
+    if st.button("🚀 Prédire le Loyer", use_container_width=True):
         input_data = {
             'superficie': superficie, 'nombre_chambres': chambres,
             'douche_wc': 1 if douche_wc == "interieur" else 0,
@@ -104,11 +104,11 @@ with col2:
         input_df = input_df[feature_cols]
         input_scaled = scaler.transform(input_df)
         prediction = model.predict(input_scaled)[0]
-        st.success(f" Le loyer mensuel estimé est de : **{prediction:,.0f} Ar**")
+        st.success(f"Le loyer mensuel estimé est de : **{prediction:,.0f} Ar**")
 
 # --- 4. VISUALISATION DES POIDS ---
 st.markdown("---")
-st.subheader("Poids des variables du modèle")
+st.subheader(" Poids des variables du modèle")
 coefs = pd.DataFrame({'Variable': feature_cols, 'Poids (Coefficient)': model.coef_})
 coefs['Poids Absolu'] = coefs['Poids (Coefficient)'].abs()
 coefs = coefs.sort_values(by='Poids Absolu', ascending=False)
