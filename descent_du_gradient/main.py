@@ -2,29 +2,34 @@ import numpy as np
 
 def descente_gradient(X, y, theta, alpha, iterations):
     """
-    X : Matrice des données (m lignes, n colonnes)
-    y : Vecteur des valeurs réelles
-    theta : Vecteur des paramètres (poids)
-    alpha : Taux d'apprentissage
-    iterations : Nombre de répétitions
+    Résout par descente de gradient ce que l'équation normale (X^T X)^-1 X^T y
+    résout directement : minimiser le coût J(theta) = (1/2m) * sum((X.theta - y)^2).
+
+    X : Matrice des données, m lignes (exemples) x n colonnes (variables + biais)
+    y : Vecteur des valeurs réelles, taille m
+    theta : Vecteur des paramètres (poids), taille n — point de départ
+    alpha : Taux d'apprentissage (pas de mise à jour à chaque itération)
+    iterations : Nombre de pas de descente à effectuer
     """
-    m = len(y)  # Nombre d'exemples
+    m = len(y)  # nombre d'exemples, utilisé pour moyenner l'erreur sur tout le jeu de données
     historique_cout = []
 
     for i in range(iterations):
-        # 1. Calcul des prédictions (Modèle : y_hat = X * theta)
+        # Prédiction du modèle linéaire : y_hat = X . theta
         y_pred = np.dot(X, theta)
 
-        # 2. Calcul de l'erreur
+        # Erreur signée par exemple (positive si on surestime, négative si on sous-estime)
         erreurs = y_pred - y
 
-        # 3. Calcul du gradient (avec 1/2m du cours → le 2 s'annule → 1/m)
+        # Gradient de J par rapport à theta : X^T . erreurs / m
+        # (dérivée de (1/2m)*sum(erreurs^2) → le facteur 2 s'annule avec le carré, il reste 1/m)
         gradient = (1 / m) * np.dot(X.T, erreurs)
 
-        # 4. Mise à jour des paramètres
+        # Pas de descente : on avance dans le sens opposé au gradient, proportionnellement à alpha
         theta = theta - alpha * gradient
 
-        # 5. Calcul du coût APRÈS mise à jour (pour un suivi correct)
+        # Coût recalculé avec le theta mis à jour, pour que la courbe de coût
+        # reflète bien l'état du modèle à la fin de l'itération i
         y_pred_new = np.dot(X, theta)
         cout = (1 / (2 * m)) * np.sum((y_pred_new - y) ** 2)
         historique_cout.append(cout)
@@ -32,19 +37,19 @@ def descente_gradient(X, y, theta, alpha, iterations):
     return theta, historique_cout
 
 
-# --- Données ---
+# --- Données d'exemple (3 individus, 2 variables) ---
 X = np.array([
     [8, 9],
     [3, 9],
     [4, 10]
 ])
-y = np.array([1, 2, 3])  # ✅ Bug 1 corrigé : valeurs cibles ajoutées
+y = np.array([1, 2, 3])  # valeurs cibles associées à chaque ligne de X
 
-# Ajout de la colonne pour le biais (b)
+# Ajout d'une colonne de 1 devant X : theta[0] devient alors le terme de biais (intercept)
 X_biais = np.column_stack((np.ones(len(X)), X))
 
-# Initialisation des paramètres à 0
-theta_initial = np.zeros(X_biais.shape[1])  # ✅ Bug 2 corrigé : [1] au lieu de [11]
+# theta doit avoir une composante par colonne de X_biais (biais + variables), d'où X_biais.shape[1]
+theta_initial = np.zeros(X_biais.shape[1])
 
 # Paramètres d'apprentissage
 alpha = 0.0001
