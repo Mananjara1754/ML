@@ -83,7 +83,7 @@ with col2:
     meuble = st.selectbox("Meublé", ["non", "oui"])
     etat = st.selectbox("État général", ["bon", "moyen", "mauvais"])
 
-    if st.button("🚀 Prédire le Loyer", use_container_width=True):
+    if st.button("Prédire le Loyer", use_container_width=True):
         input_data = {
             'superficie': superficie, 'nombre_chambres': chambres,
             'douche_wc': 1 if douche_wc == "interieur" else 0,
@@ -104,7 +104,7 @@ with col2:
         input_df = input_df[feature_cols]
         input_scaled = scaler.transform(input_df)
         prediction = model.predict(input_scaled)[0]
-        st.success(f"💰 Le loyer mensuel estimé est de : **{prediction:,.0f} Ar**")
+        st.success(f" Le loyer mensuel estimé est de : **{prediction:,.0f} Ar**")
 
 # --- 4. VISUALISATION DES POIDS ---
 st.markdown("---")
